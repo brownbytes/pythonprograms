@@ -54,23 +54,21 @@ class WORM():
         
         
     def eat_apple(self):
-        #func to check collision points between apple and worm. If yes increase the lenght of worn
+        #func to check collision points between apple and worm. If yes increase the lenght of worm
+        global worm
         wormtemp = [0,0]
-        if apple_pos == worm[0]:
-            wormtemp[0],wormtemp[1] = worm[len(worm)-1][0],worm[len(worm)-1][1]
-            
+        if apple_pos == worm[0]:           
+            # Create new head after the apple position, according to current direction
             if direction == 'left':
-                self.move_left()
-                worm.append((wormtemp[0]+1,wormtemp[1])) #increase the lenght from the tail end
+                wormtemp_head = (worm[0][0]-1,worm[0][1])
             elif direction == 'right':
-                self.move_right()
-                worm.append((wormtemp[0]-1,wormtemp[1]))
+                wormtemp_head = (worm[0][0]+1,worm[0][1]) 
             elif direction == 'up':
-                self.move_up()
-                worm.append((wormtemp[0],wormtemp[1]+1))                    
+                wormtemp_head = (worm[0][0],worm[0][1]-1)               
             elif direction == 'down':
-                self.move_down()
-                worm.append((wormtemp[0],wormtemp[1]-1))
+                wormtemp_head = (worm[0][0],worm[0][1]+1) 
+            worm.insert(0, wormtemp_head)            
+                
             create_worm()
             create_apple()
         
@@ -129,7 +127,7 @@ class WORM():
             return False
         
     def kill_worm(self):
-        #if bite_self or hit_wall are true then the work is dead
+        #if bite_self or hit_wall are true then the worm is dead
         if self.hit_wall() or self.bite_self():
             pygame.quit()
             sys.exit()
