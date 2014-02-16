@@ -1,4 +1,4 @@
-#usr/bin/env python
+#!/usr/bin/env python
 #author : durga
 # the program is a pixel-canvas. clicking on a box colours the box black and double-clicking
 #on the same box colours it back to white.
@@ -28,7 +28,7 @@ class PAINT(): #initialise a canvas, paint the boxes
 	def __init__(self):
 		self.canvas = pygame.display.set_mode((CANVASSIDE,CANVASSIDE))
 		self.canvas.fill(COLOR['BLACK'])
-		
+
 	def blit_pixiey(self,pixiey):
 		row = 0
 		col = 0
@@ -36,13 +36,13 @@ class PAINT(): #initialise a canvas, paint the boxes
 		pixie_id = 0
 		while col < CANVASSIDE:
 			row = 0
-			while row < (CANVASSIDE-MARGIN):	
+			while row < (CANVASSIDE-MARGIN):
 				self.canvas.blit(pixiey.pixie,(row,col))
 				self.blitpos[pixie_id] = [row,col]
 				row += (PIXIESIDE+GAP)
 				pixie_id += 1
-			col += (PIXIESIDE+GAP)	
-		
+			col += (PIXIESIDE+GAP)
+
 	def blit_colors(self):
 		row = CANVASSIDE-MARGIN+10
 		col = MARGIN
@@ -52,7 +52,7 @@ class PAINT(): #initialise a canvas, paint the boxes
 
 	def update_canvas(self):
 		pygame.display.update()
-	
+
 	def get_color(self,posx,posy):
 		canvascolor = self.canvas.get_at((posx,posy))
 		for color in COLOR.keys():
@@ -79,7 +79,7 @@ class PIXIE(): # each 10*10 box is called a pixie
 				if (canvas.blitpos[id][0] <= posx < canvas.blitpos[id][0]+outerside) and (canvas.blitpos[id][1] <= posy < canvas.blitpos[id][1]+outerside):
 					x = canvas.blitpos[id][0]
 					y = canvas.blitpos[id][1]
-					
+
 					if canvas.get_color(posx,posy) == 'WHITE':# to fill a empty space with color
 						pygame.draw.rect(canvas.canvas,COLOR[curcolor],(x,y,PIXIESIDE,PIXIESIDE))
 					elif canvas.get_color(posx,posy) != 'WHITE':#if the pixie is already coloured
@@ -89,7 +89,7 @@ def main():
 	canvas = PAINT()
 	pixiey = PIXIE()
 	canvas.blit_pixiey(pixiey)
-	canvas.blit_colors()	
+	canvas.blit_colors()
 	while True:
 		for event in pygame.event.get():
 			if ((event.type == QUIT) or (event.type == KEYUP and event.key == K_ESCAPE)):
