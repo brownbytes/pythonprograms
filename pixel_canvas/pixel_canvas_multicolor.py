@@ -25,6 +25,8 @@ GAP = 2
 class PAINT(): #initialise a canvas, paint the boxes
 
 	blitpos = {}
+    self.freeMarginY = 0
+    
 	def __init__(self):
 		self.canvas = pygame.display.set_mode((CANVASSIDE,CANVASSIDE))
 		self.canvas.fill(COLOR['BLACK'])
@@ -49,6 +51,7 @@ class PAINT(): #initialise a canvas, paint the boxes
 		for color in COLOR.keys():
 			pygame.draw.rect(self.canvas,COLOR[color],(row,col,COLORTABWD,COLORTABHT))
 			col += COLORTABHT
+        self.freeMarginY = col + COLORTABHT
 
 	def update_canvas(self):
 		pygame.display.update()
