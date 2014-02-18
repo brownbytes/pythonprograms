@@ -66,14 +66,12 @@ class PAINT(): #initialise a canvas, paint the boxes
             if COLOR[color] == canvascolor:
                 return color
                 
-    def load_plugins(self):
-        # TODO: This implementation can be made generic, loading ALL plugins found in /plugins directory
-        # But that would require a generic Plugin api to be followed by all plugin modules
+    def load_plugins(self):        
         try:
-            from plugins.saveload.saveload import SaveLoad
-            
+            from plugins.saveload.saveload import SaveLoad            
         except:
             print "Cannot find saveload plugin"
+        # TODO: move this to try block once finalized
         self.saveloadModule = SaveLoad(MARGIN, CANVASSIDE, PIXIESIDE, GAP, self)
 
 class PIXIE(): # each 10*10 box is called a pixie

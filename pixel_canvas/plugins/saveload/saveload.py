@@ -22,7 +22,6 @@ class SaveLoad():
             
 
     def save(self):
-        print "save() called"
         # save in custom format
         '''
         Text file:
@@ -31,11 +30,14 @@ class SaveLoad():
         <canvas attributes>
         <color arrays, space separated>
         '''
-        realPixieSide = self.PIXIESIDE + self.GAP
-        for y in range(5, realPixieSide): #(CANVASSIDE):
-            for x in range(5, realPixieSide): #(CANVASSIDE - MARGIN):
-                print self.canvas.get_color(x+5, y+5),                                 
-            print ""            
+        realPixieSide = self.PIXIESIDE + self.GAP        
+        y = 0
+        while y < self.CANVASSIDE:
+            x = 0
+            while x < (self.CANVASSIDE - self.MARGIN):
+                print self.canvas.get_color(x,y)
+                x += realPixieSide                
+            y += realPixieSide   
         
 
     def load(self):
@@ -44,6 +46,7 @@ class SaveLoad():
 
         
     def onMouseClick(self, eventObj):
+        # TODO: check margin coordinates and return earlier
         self.saveButton.onMouseClick(eventObj)
         self.loadButton.onMouseClick(eventObj)
     

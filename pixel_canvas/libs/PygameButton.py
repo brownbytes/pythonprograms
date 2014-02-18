@@ -41,6 +41,5 @@ class PygameButton():
         
     def onMouseClick(self, eventObj):
         if self.rect.collidepoint(eventObj.pos):
-            print self.text, "button clicked"
             self.onClick()
             
