@@ -6,22 +6,26 @@
 
 import pygame
 from pygame.locals import*
+import os
 
-class PygameButton():
-    self.rect = None
-    self.normalButtonSurface = None       
-    self.font = None 
-    self.bgcolor = None
-    self.fontcolor = None
-    self.onClick = None
+# the current directory is by default from where the code runs
+# change it to current directory of this file for proper resource file laoding
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-    def __init__( self, text, x=0, y=0, w=60, h=20, bgcolor=(255, 255, 255), fontcolor=(0, 0, 0), onclick = None):
+class PygameButton():    
+
+    def __init__(self, text, x=0, y=0, w=60, h=20, bgcolor=(255, 255, 255), fontcolor=(0, 0, 0), onclick = None, canvasSurface = None):        
+        self.normalButtonSurface = None         
+        self.bgcolor = bgcolor
+        self.fontcolor = fontcolor        
         pygame.font.init()
         self.font = pygame.font.Font('Junction.ttf', 14)
         self.rect = pygame.Rect(x, y, w, h)
         self.text = text                
         self.onClick = onclick
+        self.canvasSurface = canvasSurface
         self.initButtonSurface()
+        self.draw(self.canvasSurface)
         
     
     def initButtonSurface(self):
@@ -35,7 +39,8 @@ class PygameButton():
     def draw(self, canvasSurface):
         canvasSurface.blit(self.normalButtonSurface, self.rect)
         
-    def onMouseClick(self, evenObj):
+    def onMouseClick(self, eventObj):
         if self.rect.collidepoint(eventObj.pos):
+            print self.text, "button clicked"
             self.onClick()
             
