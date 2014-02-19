@@ -31,7 +31,7 @@ class PAINT(): #initialise a canvas, paint the boxes
         self.canvas = pygame.display.set_mode((CANVASSIDE,CANVASSIDE))
         self.canvas.fill(COLOR['BLACK'])
         self.freeMarginY = 0 # tracks free y-coordinate in margin for more interfaces to be drawn
-        self.saveloadModule = None
+        self.plugins = { }
 
     def blit_pixiey(self,pixiey):
         row = 0
@@ -69,7 +69,7 @@ class PAINT(): #initialise a canvas, paint the boxes
     def load_plugins(self):        
         try:
             from plugins.saveload.saveload import SaveLoad   
-            self.saveloadModule = SaveLoad(MARGIN, CANVASSIDE, PIXIESIDE, GAP, self)
+            self.plugins['saveload'] = SaveLoad(MARGIN, CANVASSIDE, PIXIESIDE, GAP, self)
         except:
             print "Cannot find saveload plugin"
         
@@ -114,7 +114,8 @@ def main():
             elif event.type == MOUSEBUTTONDOWN:
                 (mouse_x,mouse_y) = pygame.mouse.get_pos()
                 pixiey.click(mouse_x,mouse_y,canvas)
-                canvas.saveloadModule.onMouseClick(event)
+                for plugin in canvas.plugins.values():
+                    plugin.onMouseClick(event)
         canvas.update_canvas()
 
 main()
