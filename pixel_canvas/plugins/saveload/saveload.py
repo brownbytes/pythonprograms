@@ -8,6 +8,16 @@ from libs.PygameButton import PygameButton
 import pickle
 import pygame
 
+hasTkGui = False
+try:
+    from Tkinter import Tk
+    from tkFileDialog import askopenfilename, asksaveasfilename
+    Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
+    hasTkGui = True
+except:
+    pass
+    
+    
 class SaveLoad():    
 
     def __init__(self, margin, canvasside, pixieside, gap, canvas):        
@@ -37,7 +47,10 @@ class SaveLoad():
                 x += realPixieSide                
             y += realPixieSide   
         try:
-            pickle.dump( pc, open("save.pc", "wb") )
+            filename = "save.pc"
+            if hasTkGui:
+                filename = asksaveasfilename(defaultextension=".pc", filetypes=[("PixelCanvas file", ".pc")], initialfile="save.pc")            
+            pickle.dump( pc, open(filename, "wb") )
             print "Canvas saved!"
         except:
             print "Error in saving the canvas"
@@ -46,7 +59,10 @@ class SaveLoad():
     def load(self):
         # load file and draw on canvas
         try:
-            pc = pickle.load( open("save.pc", "rb") )  
+            filename = "save.pc"
+            if hasTkGui:
+                filename = askopenfilename(defaultextension=".pc", filetypes=[("PixelCanvas file", ".pc")], initialfile="save.pc")
+            pc = pickle.load( open(filename, "rb") )  
             print "Save file loaded!"
         except:
             print "Error in loading save file"
