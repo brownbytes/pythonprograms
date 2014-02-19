@@ -68,11 +68,11 @@ class PAINT(): #initialise a canvas, paint the boxes
                 
     def load_plugins(self):        
         try:
-            from plugins.saveload.saveload import SaveLoad            
+            from plugins.saveload.saveload import SaveLoad   
+            self.saveloadModule = SaveLoad(MARGIN, CANVASSIDE, PIXIESIDE, GAP, self)
         except:
             print "Cannot find saveload plugin"
-        # TODO: move this to try block once finalized
-        self.saveloadModule = SaveLoad(MARGIN, CANVASSIDE, PIXIESIDE, GAP, self)
+        
 
 class PIXIE(): # each 10*10 box is called a pixie
 
