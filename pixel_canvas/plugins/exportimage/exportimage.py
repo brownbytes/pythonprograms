@@ -10,7 +10,7 @@ import pygame
 hasTkGui = False
 try:
     from Tkinter import Tk
-    from tkFileDialog import askopenfilename, asksaveasfilename
+    from tkFileDialog import asksaveasfilename
     Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
     hasTkGui = True
 except:
@@ -34,8 +34,18 @@ class ExportImage():
             
 
     def export(self):
-        # export canvas as image        
-        pass
+        # export canvas as image   
+        filename = "pixel_canvas.png"                 
+        try:
+            if hasTkGui:
+                filename = asksaveasfilename(defaultextension=".png", filetypes=[("PNG", ".png")], initialfile="pixel_canvas.png")
+            print "Image exported!"
+        except:
+            print "Error in exporting image"
+            return
+        exportSurface = pygame.Surface((self.CANVASSIDE-self.MARGIN, self.CANVASSIDE))
+        exportSurface.blit(self.canvas.canvas, (0,0))
+        pygame.image.save(exportSurface, filename)
 
         
     def onMouseClick(self, eventObj):
