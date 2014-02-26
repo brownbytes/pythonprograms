@@ -19,7 +19,7 @@ except:
     
 class ExportImage():    
 
-    def __init__(self, margin, canvasside, pixieside, gap, canvas):        
+    def __init__(self, margin, canvasside, pixieside, gap, canvas, noGrid=True):        
         self.MARGIN = margin
         self.CANVASSIDE = canvasside
         self.PIXIESIDE = pixieside
@@ -31,6 +31,7 @@ class ExportImage():
         # initialize interface buttons
         self.exportButton = PygameButton("export", x, y, w=60, h=20, onclick=self.export, canvasSurface=self.canvas.canvas)
         self.canvas.freeMarginY += 20 + 20
+        self.noGrid = noGrid
             
 
     def export(self):
@@ -43,8 +44,27 @@ class ExportImage():
         except:
             print "Error in exporting image"
             return
-        exportSurface = pygame.Surface((self.CANVASSIDE-self.MARGIN, self.CANVASSIDE))
-        exportSurface.blit(self.canvas.canvas, (0,0))
+
+        exportSurface = None       
+        if self.noGrid:
+            realPixieSide = self.PIXIESIDE + self.GAP 
+            noGapCanvasW = self.PIXIESIDE * ((self.CANVASSIDE-self.MARGIN) / realPixieSide)
+            noGapCanvasH = self.PIXIESIDE * (self.CANVASSIDE / realPixieSide)
+            exportSurface = pygame.Surface((noGapCanvasW, noGapCanvasH))
+
+            y, ys = 0, 0
+            while y < noGapCanvasH:
+                x, xs = 0, 0
+                while x < noGapCanvasW:
+                    pygame.draw.rect(exportSurface, self.canvas.canvas.get_at((xs, ys)), (x, y, self.PIXIESIDE, self.PIXIESIDE))
+                    x += self.PIXIESIDE
+                    xs += realPixieSide                
+                y += self.PIXIESIDE
+                ys += realPixieSide
+        else:
+            exportSurface = pygame.Surface((self.CANVASSIDE-self.MARGIN, self.CANVASSIDE))
+            exportSurface.blit(self.canvas.canvas, (0,0))
+
         pygame.image.save(exportSurface, filename)
 
         
