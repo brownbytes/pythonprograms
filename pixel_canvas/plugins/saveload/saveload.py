@@ -58,8 +58,8 @@ class SaveLoad():
 
     def load(self):
         # load file and draw on canvas
+        filename = "save.pc"            
         try:
-            filename = "save.pc"
             if hasTkGui:
                 filename = askopenfilename(defaultextension=".pc", filetypes=[("PixelCanvas file", ".pc")], initialfile="save.pc")
             pc = pickle.load( open(filename, "rb") )  

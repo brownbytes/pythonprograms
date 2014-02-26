@@ -72,6 +72,13 @@ class PAINT(): #initialise a canvas, paint the boxes
             self.plugins['saveload'] = SaveLoad(MARGIN, CANVASSIDE, PIXIESIDE, GAP, self)
         except:
             print "Cannot find saveload plugin"
+
+        try:
+            from plugins.exportimage.exportimage import ExportImage
+            self.plugins['exportimage'] = ExportImage(MARGIN, CANVASSIDE, PIXIESIDE, GAP, self)            
+        except:
+            print "Cannot find exportimage plugin"
+        
         
 
 class PIXIE(): # each 10*10 box is called a pixie
