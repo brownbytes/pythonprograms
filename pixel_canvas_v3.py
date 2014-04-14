@@ -215,7 +215,8 @@ class PIXIE(): # define/initialise a pixie
                 elif action == 'ERASE':
                     print "in erase"
                     self. erase_pixie(canvas.canvas,corner)
-                    del(color_map[ID]) # else s reside of colored dots is left behind on the canvas
+                    if ID in color_map.keys():
+                       del(color_map[ID]) # else s reside of colored dots is left behind on the canvas
 
 def main():
     pygame.init()
