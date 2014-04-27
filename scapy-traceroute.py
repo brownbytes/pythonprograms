@@ -1,9 +1,8 @@
 # a traceroute program
 # send a ICMP packet with incremental TTL value, till the destination is reached
-# 1.send ICMP packet to dstip with ttl 1
-# 2.record the icmp response ICMP
-# 3.if dstip == icmp respose IP . close traceroute
-# 4.else increment the ttl to 2 and repeat steps 2,3
+# 1.send set of ICMP packets with varying TTL values from 4 to 32
+# 2.store the answeres in trcrt list
+# 3.if dstip == icmp respose IP . exit loop else append the sr return value to trcrt
 
 from scapy.all import *
 
