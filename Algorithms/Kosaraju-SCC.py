@@ -1,7 +1,7 @@
 '''
 ###########
 name:durga
-program : Depth First Search Algorithm for topological ordering
+program : Depth First Search Algorithm
 
 DepthFirst Search involves passing deeper into the graph with each step
 unlike Breadth First Search which passes each layer systematically.
