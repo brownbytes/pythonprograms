@@ -28,6 +28,7 @@ from pygame.locals import *
 used_up=[None]
 LANG = set([])
 DIFF = set([])
+flag = 0
 
 
 def readFile():
@@ -40,7 +41,7 @@ def readFile():
     global LANG
     global DIFF
     
-    with open('movies.csv','rU') as moviefile:
+    with open('movies1.csv','rU') as moviefile:
         movies = csv.reader(moviefile)
         i = 0
         j = 0
@@ -48,7 +49,6 @@ def readFile():
             LANG.add(movie[0])
             DIFF.add(movie[1])
             if movie[0] == "HIN":
-
                 movie_dict[movie[0]][movie[1]][i] = movie[2:]
                 i += 1
             elif movie[0] == 'ENG':
@@ -67,11 +67,12 @@ def suggestMovie(movie_file):
     """
     global used_up
     specs = chooseLang()
-
-    seed = random.choice(movie_file[specs[0]][specs[1]].keys()) # keep creating new seed if the movie is already chosen
-      
+    try:
+        seed = random.choice(movie_file[specs[0]][specs[1]].keys()) # keep creating new seed if the movie is already chosen
+    except:
+        suggestMovie(movie_file)
+        
     movie = movie_file[specs[0]][specs[1]][seed]
-
     return movie
 
 def chooseLang():
@@ -127,13 +128,18 @@ class Window():
         """
         constantly updates the next movie display rectangle when the next_movie button is clicked
         """
-        global new_movie_display,used_up
+        global new_movie_display,used_up,flag# checks for recursion
         
         movie_file = readFile()
         new_movie = suggestMovie(movie_file)[0]
 
-        if new_movie in used_up:
-            self.renderNext_movie()
+        if new_movie in used_up:#recurively call for unique movie            
+            if flag > 10:
+                used_up=[]#reset used up
+            else:              
+                self.renderNext_movie()
+                flag += 1
+        
 
         used_up.append(new_movie)
 
